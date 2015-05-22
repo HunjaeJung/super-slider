@@ -1,0 +1,27 @@
+<template name="Slider">
+    <!--Jeegle image slider start-->
+    <div class="body-background"></div>
+    <div class="body-background-wrapper"></div>
+
+    <div id="slider-box" class="slider-box hidden-xs">
+        {{> dropzone callbacks = imageUploaded }}
+
+        <ul id="slider" class="slider">
+            {{#each images}}
+                <li name="image-div" data-num="{{index}}" class="image-div">
+                    <img name="images_in_belt" class="images-in-belts" data-image-title="{{data.imagePath}}"
+                         src="http://image.jeegle.io/{{data.imagePath}}"/>
+                </li>
+            {{/each}}
+        </ul>
+
+        <a href="#" id="slider-btn-left" class="slider-btn control-next"></a>
+        <a href="#" id="slider-btn-right" class="slider-btn control-prev"></a>
+    </div>
+    <!--Jeegle image slider end-->
+</template>
+
+
+<template name="sample">
+    <div>hi</div>
+</template>

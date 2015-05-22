@@ -1,0 +1,146 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.body-background {
+    width: 120%;
+    height: 120%;
+    position: fixed;
+    top: -10%;
+    left: -10%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    -webkit-filter: blur(15px);
+    -moz-filter: blur(15px);
+    -o-filter: blur(15px);
+    -ms-filter: blur(15px);
+    filter: blur(15px);
+    z-index: -2;
+}
+
+.body-background-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* 슬라이더 위 sub image들 마우스 올렸을 때 pointer가 나오게 합니다.*/
+.image-div {
+    cursor: pointer;
+}
+
+/* main 이미지는 클릭 이벤트가 없으므로 auto로 설정합니다.*/
+#main-image-li{
+    /*box-sizing: border-box;*/
+    /*border: 1px solid rgba(0, 0, 0, 0.3);*/
+    cursor: auto;
+}
+
+/* 슬라이더 관련 */
+.slider-box {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+}
+
+.slider {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 1000%;
+    height: 100%;
+}
+
+.slider li {
+    position: relative;
+    display: inline-block;
+    float: left;
+    padding: 0;
+    /* default, but never used */
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.slider li img {
+    position: absolute;
+    display: inline-block;
+    left: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* 이동 버튼 */
+a.control-prev, a.control-next {
+    position: absolute;
+    z-index: 999;
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    border-radius: 0 2px 2px 0;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    visibility: hidden;
+}
+
+a.control-prev {
+    background-color: rgba(0, 0, 0, 0.4);
+    left: 15px;
+}
+
+a.control-next {
+    background-color: rgba(0, 0, 0, 0.4);
+    right: 15px;
+}
+
+a.control-prev:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+a.control-next:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.jqDropZone {
+    position: absolute;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    z-index:10000;
+    /*line-height: 50px;*/
+    /*text-align: center;*/
+    /*font-weight: bold;*/
+}
+
+/*.jqDropZone.in {*/
+    /*width: 600px;*/
+    /*height: 200px;*/
+    /*line-height: 200px;*/
+    /*font-size: larger;*/
+/*}*/
+
+.jqDropZone.hover {
+    background: rgba(0,0,0,0.5);
+}
+
+.jqDropZone.fade {
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    opacity: 1;
+}
