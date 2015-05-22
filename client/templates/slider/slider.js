@@ -103,9 +103,8 @@ Template.Slider.helpers({
     imageUploaded: function() {
         return {
             finished: function(index, fileInfo, context) {
-                console.log(index)
-                console.log(fileInfo)
-                console.log(context)
+                console.dir(fileInfo);
+                changeMainImage(fileInfo.name);
             }
         }
     }
@@ -208,6 +207,12 @@ getRandomImages = function(NumOfImages) {
                 //console.log("결과가 없습니다.");
             }
         });
+}
+
+
+function changeMainImage(filename){
+    $('#main-image').attr('src','http://localhost:9090/'+filename);
+    //setImagePosition();
 }
 
 /*
@@ -473,6 +478,7 @@ function deeplinkReactive(mainImageHeight){
 }
 
 function setImagePosition() {
+    console.log('?')
     var slider_images = document.getElementsByName('images_in_belt');
 
     _.forEach(slider_images, function (img) {
