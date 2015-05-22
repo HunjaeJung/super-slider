@@ -1,10 +1,10 @@
 function Slider() {
-    this.$DisplayPieces = 9;      // [홀수] 하나의 화면에 얼마나 보여줄지 결정하게 됩니다.
+    this.$DisplayPieces = 13;      // [홀수] 하나의 화면에 얼마나 보여줄지 결정하게 됩니다.
     this.$MaximumImageNum = 21;   // [홀수] 로드하는 최대 이미지 개수입니다.
     this.$MainImageIndex = parseInt(this.$MaximumImageNum / 2); // 현재 중앙 이미지 번호입니다.
     this.$MainImageNode = null; // 중앙 이미지 노드입니다.
     this.$MainImageHeight = 0;        // 가운데 올 가장 큰 이미지의 한변의 길이입니다.
-    this.$MainImageMaxHeight = 580;
+    this.$MainImageMaxHeight = 640;
     this.$SubImagesHeight = 0;   // 이미지 하나당 너비입니다.
     this.$HeaderHeight = 0;
     this.$FooterHeight = 0;
@@ -17,6 +17,8 @@ function Slider() {
 
 // 이미지 슬라이더 객체입니다.
 slider = new Slider();
+
+
 
 // 이미지를 저장하고 있는 우선순위 큐입니다.
 ImageQueue = new priorityQueue(slider.$MaximumImageNum);
@@ -478,7 +480,6 @@ function deeplinkReactive(mainImageHeight){
 }
 
 function setImagePosition() {
-    console.log('?')
     var slider_images = document.getElementsByName('images_in_belt');
 
     _.forEach(slider_images, function (img) {
@@ -569,307 +570,7 @@ function restoreCenterImage(type) {
 }
 
 
-var defaultImages = [{
-    "imagePath": "avenue-forest-road-1014-640.jpg",
-    "score": 2,
-    "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/avenue-forest-road-1014-1044x550.jpg",
-    "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/avenue-forest-road-1014.jpg",
-    "_id": "a1bd2920-f233-11e4-ae61-f7d49e4b7682"
-},
-    {
-        "imagePath": "chef-cooking-food-1000-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/chef-cooking-food-1000-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/chef-cooking-food-1000.jpg",
-        "_id": "a02d8870-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "chilling-fashion-girl-1002-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/chilling-fashion-girl-1002-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/chilling-fashion-girl-1002.jpg",
-        "_id": "a0765140-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "boy-flying-happiness-1005-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/boy-flying-happiness-1005-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/boy-flying-happiness-1005.jpg",
-        "_id": "a0deb000-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "animal-dog-pet-1007-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/animal-dog-pet-1007-644x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/animal-dog-pet-1007.jpg",
-        "_id": "a14958b0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "bicycle-bike-foot-1009-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/bicycle-bike-foot-1009-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/bicycle-bike-foot-1009.jpg",
-        "_id": "a1617490-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "lights-night-road-1011-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/lights-night-road-1011-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/lights-night-road-1011.jpg",
-        "_id": "a19ca8d0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "bench-lake-man-1016-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/bench-lake-man-1016-733x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/bench-lake-man-1016.jpg",
-        "_id": "a1e2b280-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "bridge-hills-mountains-1018-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/bridge-hills-mountains-1018-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/bridge-hills-mountains-1018.jpg",
-        "_id": "a21708f0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "bokeh-drops-of-water-glass-1020-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/bokeh-drops-of-water-glass-1020-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/bokeh-drops-of-water-glass-1020.jpg",
-        "_id": "a2480400-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "field-hut-lawn-1022-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/field-hut-lawn-1022-880x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/field-hut-lawn-1022.jpg",
-        "_id": "a27ca890-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "air-freshener-bokeh-car-1025-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/air-freshener-bokeh-car-1025-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/air-freshener-bokeh-car-1025.jpg",
-        "_id": "a2b98a80-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "animal-eye-horse-1027-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/animal-eye-horse-1027-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/animal-eye-horse-1027.jpg",
-        "_id": "a2cb64d0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "clouds-colorful-colourful-1029-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/clouds-colorful-colourful-1029-1142x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/clouds-colorful-colourful-1029.jpg",
-        "_id": "a2e09a80-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "caged-grate-inside-1031-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/caged-grate-inside-1031-860x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/caged-grate-inside-1031.jpg",
-        "_id": "a3236fe0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "cerimony-champagne-man-1033-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/cerimony-champagne-man-1033-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/cerimony-champagne-man-1033.jpg",
-        "_id": "a3466130-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "holding-man-nokia-lumia-1035-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/holding-man-nokia-lumia-1035-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/holding-man-nokia-lumia-1035.jpg",
-        "_id": "a3a23cd0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "black-and-white-dark-light-1036-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/black-and-white-dark-light-1036-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/black-and-white-dark-light-1036.jpg",
-        "_id": "a3d819e0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "berth-boat-harbor-1039-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/berth-boat-harbor-1039-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/berth-boat-harbor-1039.jpg",
-        "_id": "a3f9f9c0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "cement-pattern-stones-1043-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/cement-pattern-stones-1043-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/cement-pattern-stones-1043.jpg",
-        "_id": "a4246520-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "fallen-trees-forest-stack-1045-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/fallen-trees-forest-stack-1045-821x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/fallen-trees-forest-stack-1045.jpg",
-        "_id": "a45c6510-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "bicycle-bike-city-1048-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/bicycle-bike-city-1048-789x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/bicycle-bike-city-1048.jpg",
-        "_id": "a48a2bd0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "cokin-filter-field-hand-1050-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/cokin-filter-field-hand-1050-824x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/cokin-filter-field-hand-1050.jpg",
-        "_id": "a49f8890-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "dawn-dusk-fog-1052-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/dawn-dusk-fog-1052-830x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/dawn-dusk-fog-1052.jpg",
-        "_id": "a4ba3c80-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "buildings-city-sepia-1054-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/buildings-city-sepia-1054-733x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/buildings-city-sepia-1054.jpg",
-        "_id": "a4e8eda0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "beach-holiday-hot-1056-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/beach-holiday-hot-1056-733x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/beach-holiday-hot-1056.jpg",
-        "_id": "a50f6160-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "forest-moss-path-1058-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/forest-moss-path-1058-824x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/forest-moss-path-1058.jpg",
-        "_id": "a5476150-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "bay-horizon-mountains-1060-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/bay-horizon-mountains-1060-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/bay-horizon-mountains-1060.jpg",
-        "_id": "a55a4d10-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "africa-animal-cat-1066-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/africa-animal-cat-1066-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/africa-animal-cat-1066.jpg",
-        "_id": "a58072b0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "dark-lights-night-1068-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/dark-lights-night-1068-881x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/dark-lights-night-1068.jpg",
-        "_id": "a5c8c650-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "city-closely-fire-ladder-1070-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/city-closely-fire-ladder-1070-901x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/city-closely-fire-ladder-1070.jpg",
-        "_id": "a5eaf450-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "blur-blurred-car-1073-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/blur-blurred-car-1073-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/blur-blurred-car-1073.jpg",
-        "_id": "a60fe170-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "couple-kissing-love-1075-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/couple-kissing-love-1075-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/couple-kissing-love-1075.jpg",
-        "_id": "a62c6a20-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "apple-art-black-1077-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/apple-art-black-1077-1286x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/apple-art-black-1077.jpg",
-        "_id": "a66861b0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "abstract-blur-blurred-1079-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/abstract-blur-blurred-1079-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/abstract-blur-blurred-1079.jpg",
-        "_id": "a69257e0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "jewellery-jewelry-marriage-1081-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/jewellery-jewelry-marriage-1081-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/jewellery-jewelry-marriage-1081.jpg",
-        "_id": "a6a5b8d0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "beetle-car-ceremony-1083-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/beetle-car-ceremony-1083-366x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/beetle-car-ceremony-1083.jpg",
-        "_id": "a6bfd080-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "clouds-desert-dunes-1084-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/clouds-desert-dunes-1084-1013x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/clouds-desert-dunes-1084.jpg",
-        "_id": "a70230b0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "broken-dangerous-lake-1087-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/broken-dangerous-lake-1087-849x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/broken-dangerous-lake-1087.jpg",
-        "_id": "a7176660-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "blur-city-lights-1089-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/blur-city-lights-1089-827x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/blur-city-lights-1089.jpg",
-        "_id": "a73cefc0-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "biscuits-box-break-1091-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/biscuits-box-break-1091-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/biscuits-box-break-1091.jpg",
-        "_id": "a74c3200-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "blur-flowers-home-1093-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/blur-flowers-home-1093-842x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/blur-flowers-home-1093.jpg",
-        "_id": "a7820f10-f233-11e4-ae61-f7d49e4b7682"
-    },
-    {
-        "imagePath": "candle-fire-flame-1095-640.jpg",
-        "score": 0,
-        "thumbnailImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/candle-fire-flame-1095-825x550.jpg",
-        "originalImageUrl": "http://static.pexels.com/wp-content/uploads/2014/06/candle-fire-flame-1095.jpg",
-        "_id": "a7c580b0-f233-11e4-ae61-f7d49e4b7682"
-    },
+var defaultImages = [
     {
         "imagePath": "creepy-curve-dark-1096-640.jpg",
         "score": 0,
