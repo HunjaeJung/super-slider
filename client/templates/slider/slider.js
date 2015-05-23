@@ -18,8 +18,6 @@ function Slider() {
 // 이미지 슬라이더 객체입니다.
 slider = new Slider();
 
-
-
 // 이미지를 저장하고 있는 우선순위 큐입니다.
 ImageQueue = new priorityQueue(slider.$MaximumImageNum);
 
