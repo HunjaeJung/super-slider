@@ -1,0 +1,75 @@
+[[[[[ ~/demo/super-slider ]]]]]
+
+=> Started proxy.
+=> Started MongoDB.
+=> Started your app.
+
+=> App running at: http://localhost:3000/
+[34mI20150523-18:41:38.993(9)? [39mstdout: 
+=> Client modified -- refreshing
+=> Server modified -- restarting...                                   => Meteor server restarted
+[34mI20150523-18:42:37.012(9)? [39mstdout: 
+[34mI20150523-18:43:34.446(9)? [39mstdout: 
+=> Server modified -- restarting...                                   => Meteor server restarted
+=> Server modified -- restarting...
+Changes to your project's package version selections:
+
+joncursi:socket-io-client  added, version 0.1.4
+
+                                   => Meteor server restarted
+=> Server modified -- restarting...                                   => Meteor server restarted
+=> Server modified -- restarting...                                   => Errors prevented startup:
+   
+   While building the application:
+   server/init.js:35:3: Unexpected token ;
+   
+=> Your application has errors. Waiting for file change.
+=> Modified -- restarting.
+=> Errors prevented startup:
+   
+   While building the application:
+   server/init.js:35:3: Unexpected token ;
+   
+=> Your application has errors. Waiting for file change.
+=> Modified -- restarting.
+=> Errors prevented startup:
+   
+   While building the application:
+   server/init.js:36:3: Unexpected token ;
+   
+=> Your application has errors. Waiting for file change.
+=> Modified -- restarting.
+=> Meteor server restarted
+[34mI20150523-19:42:10.543(9)? [39m/home/dove/uploads/jeegle_font.jpg
+[34mI20150523-19:42:10.556(9)? [39mException in callback of async function: Error: connect ECONNREFUSED
+[34mI20150523-19:42:10.556(9)? [39m    at errnoException (net.js:905:11)
+[34mI20150523-19:42:10.556(9)? [39m    at Object.afterConnect [as oncomplete] (net.js:896:19)
+=> Server modified -- restarting...                                   [34mW20150523-19:53:09.138(9)? (STDERR) [39m[35m[39m
+[34mW20150523-19:53:09.139(9)? (STDERR) [39m[35m/home/dove/.meteor/packages/meteor-tool/.1.1.3.4sddkj++os.linux.x86_64+web.browser+web.cordova/mt-os.linux.x86_64/dev_bundle/server-lib/node_modules/fibers/future.js:245[39m
+[34mW20150523-19:53:09.139(9)? (STDERR) [39m[35m						throw(ex);[39m
+[34mW20150523-19:53:09.139(9)? (STDERR) [39m[35m						      ^[39m
+[34mW20150523-19:53:09.145(9)? (STDERR) [39m[35mError: EACCES, permission denied '/share/'[39m
+[34mW20150523-19:53:09.145(9)? (STDERR) [39m[35m    at Object.fs.mkdirSync (fs.js:654:18)[39m
+[34mW20150523-19:53:09.145(9)? (STDERR) [39m[35m    at checkCreateDirectory (packages/tomi:upload-server/upload_server.js:466:1)[39m
+[34mW20150523-19:53:09.145(9)? (STDERR) [39m[35m    at Object.UploadServer.init (packages/tomi:upload-server/upload_server.js:108:1)[39m
+[34mW20150523-19:53:09.145(9)? (STDERR) [39m[35m    at exec (app/server/init.js:3:18)[39m
+[34mW20150523-19:53:09.145(9)? (STDERR) [39m[35m    at /home/dove/demo/super-slider/.meteor/local/build/programs/server/boot.js:229:5[39m
+=> Exited with code: 8
+[34mW20150523-19:53:10.541(9)? (STDERR) [39m[35m[39m
+[34mW20150523-19:53:10.542(9)? (STDERR) [39m[35m/home/dove/.meteor/packages/meteor-tool/.1.1.3.4sddkj++os.linux.x86_64+web.browser+web.cordova/mt-os.linux.x86_64/dev_bundle/server-lib/node_modules/fibers/future.js:245[39m
+[34mW20150523-19:53:10.542(9)? (STDERR) [39m[35m						throw(ex);[39m
+[34mW20150523-19:53:10.542(9)? (STDERR) [39m[35m						      ^[39m
+[34mW20150523-19:53:10.548(9)? (STDERR) [39m[35mError: EACCES, permission denied '/share/'[39m
+[34mW20150523-19:53:10.548(9)? (STDERR) [39m[35m    at Object.fs.mkdirSync (fs.js:654:18)[39m
+[34mW20150523-19:53:10.548(9)? (STDERR) [39m[35m    at checkCreateDirectory (packages/tomi:upload-server/upload_server.js:466:1)[39m
+[34mW20150523-19:53:10.548(9)? (STDERR) [39m[35m    at Object.UploadServer.init (packages/tomi:upload-server/upload_server.js:108:1)[39m
+[34mW20150523-19:53:10.548(9)? (STDERR) [39m[35m    at exec (app/server/init.js:3:18)[39m
+[34mW20150523-19:53:10.548(9)? (STDERR) [39m[35m    at /home/dove/demo/super-slider/.meteor/local/build/programs/server/boot.js:229:5[39m
+=> Exited with code: 8
+=> Server modified -- restarting...                                   [34mI20150523-19:53:13.292(9)? [39mCreated directory: /shared/uploads/
+=> Meteor server restarted
+[34mI20150523-19:57:53.631(9)? [39m/home/dove/uploads/jeegle (2).png
+[34mI20150523-19:57:53.646(9)? [39mException in callback of async function: Error: connect ECONNREFUSED
+[34mI20150523-19:57:53.646(9)? [39m    at errnoException (net.js:905:11)
+[34mI20150523-19:57:53.646(9)? [39m    at Object.afterConnect [as oncomplete] (net.js:896:19)
+=> Client modified -- refreshing

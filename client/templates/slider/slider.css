@@ -144,3 +144,16 @@ a.control-next:hover {
     transition: all 0.3s ease-out;
     opacity: 1;
 }
+
+
+.learn-result{
+
+}
+
+.predict-objs{
+  color: #fff;
+}
+
+.predict-styles{
+  color: #fff;
+}

@@ -10,3 +10,5 @@ insecure
 iron:router
 tomi:upload-server
 tomi:upload-jquery
+joncursi:socket-io-client
+http

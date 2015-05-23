@@ -1,7 +1,7 @@
-var imageServer = serverUrl + ":9090/";
+var imageServer = serverUrl + ":9999/";
 
 function Slider() {
-    this.$DisplayPieces = 13;      // [홀수] 하나의 화면에 얼마나 보여줄지 결정하게 됩니다.
+    this.$DisplayPieces = 9;      // [홀수] 하나의 화면에 얼마나 보여줄지 결정하게 됩니다.
     this.$MaximumImageNum = 21;   // [홀수] 로드하는 최대 이미지 개수입니다.
     this.$MainImageIndex = parseInt(this.$MaximumImageNum / 2); // 현재 중앙 이미지 번호입니다.
     this.$MainImageNode = null; // 중앙 이미지 노드입니다.
@@ -25,6 +25,8 @@ ImageQueue = new priorityQueue(slider.$MaximumImageNum);
 
 // Template 생성시 최초 한번만 불리는 함수입니다.
 Template.Slider.created = function () {
+    Meteor.subscribe('UploadedImage');
+
     // 최초 100개의 이미지들을 shuffle 합니다.
     defaultImages = shuffle(defaultImages);
 
@@ -34,6 +36,42 @@ Template.Slider.created = function () {
 
 // Template이 모두 render 되었을 때 불리는 함수 입니다.
 Template.Slider.rendered = function () {
+    Tracker.autorun(function(){
+        $('#loading-spinnter').hide();
+
+        console.log('total number of uploaded files: ' + UploadedImage.find().count());
+        console.log(UploadedImage.find({"fileName": currentFilename}).fetch());
+        learnResult = UploadedImage.find({"fileName": currentFilename}).fetch();
+
+        if(learnResult.length == 0) return;
+
+        var content = learnResult[0].content;
+
+        var htmlList = [];
+        for(i=0;i<content.predict_obj.length;i++){
+            var html = '<div class="predict-title">* the objects predicted</div>'
+            html += '<div id="predict-obj-'+i+'" class="predict-obj" data-obj-id="'+i+'">';
+            html += (i+1) + ': '
+            html += content.predict_obj[i].name
+            html += '('+content.predict_obj[i].score+')'
+            html += '</div>';
+            htmlList.push(html);
+        }
+        $('#predict-objs').html(htmlList.join(''));
+
+        htmlList = [];
+        for(i=0;i<content.predict_obj.length;i++){
+            var html = '<div class="predict-title">* the styles predicted</div>'
+            html = '<div id="predict-style-'+i+'" class="predict-style" data-style-id="'+i+'">';
+            html += (i+1) + ': '
+            html += content.predict_style[i].name
+            html += '('+content.predict_style[i].score+')'
+            html += '</div>';
+            htmlList.push(html);
+        }
+        $('#predict-styles').html(htmlList.join(''));
+    });
+
     if (!this.rendered) {
         this.rendered = true;
 
@@ -46,15 +84,15 @@ Template.Slider.rendered = function () {
 
             if ($('#input-15').is(":focus") == true /*글을 쓰고 있거나*/
                 || viewStatus == 2 /* image edit view 거나*/
-                || viewStatus == 3 /* share view면*/) return;
+                    || viewStatus == 3 /* share view면*/) return;
 
-            if (e.keyCode == 39) {
-                //오른쪽 방향기 = move left 버튼 클릭
-                $('#slider-btn-left').trigger('click',1);
-            } else if (e.keyCode == 37) {
-                //왼쪽 방향키 = move right 버튼 클릭
-                $('#slider-btn-right').trigger('click',1);
-            }
+                    if (e.keyCode == 39) {
+                        //오른쪽 방향기 = move left 버튼 클릭
+                        $('#slider-btn-left').trigger('click',1);
+                    } else if (e.keyCode == 37) {
+                        //왼쪽 방향키 = move right 버튼 클릭
+                        $('#slider-btn-right').trigger('click',1);
+                    }
         };
 
         $('body').on('click', '.image-div', function() {
@@ -91,6 +129,7 @@ Template.Slider.rendered = function () {
 };
 
 
+currentFilename = "";
 Template.Slider.helpers({
     images: function () {
         var tempObject = Session.get("images");
@@ -105,7 +144,9 @@ Template.Slider.helpers({
     imageUploaded: function() {
         return {
             finished: function(index, fileInfo, context) {
+                currentFilename = fileInfo.name;
                 changeMainImage(fileInfo.name);
+                $('#loading-spinnter').show();
             }
         }
     }
@@ -137,37 +178,37 @@ getImagesForTag = function(tagWord, edgeScope, NodesLimit, type) {
 
     // Neo4j로 태그 쿼리를 날립니다.
     Meteor.neo4j.call('getImagesForTag', {
-            tagWord: tagWord,
-            edgeScope: edgeScope,
-            NodesLimit: NodesLimit
-        },
-        function (err, data) {
-            if (err) throw err;
+        tagWord: tagWord,
+        edgeScope: edgeScope,
+        NodesLimit: NodesLimit
+    },
+    function (err, data) {
+        if (err) throw err;
 
-            if (data.i.length != 0) {
-                // sentence 쿼리 결과가 너무 늦은 경우
-                if (type == 2 /*sentence*/ && slider.$CurrentKeyword.indexOf(data.t[0].word) == -1) {
-                    return;
-                }
-
-                var Images = data.i;
-
-                // 이미지를 우선 순위 큐에 넣습니다.
-                pushImages(Images, 0, data.t, type);
-
-                // 중앙 이미지는 제자리로 다시 돌려줍니다.
-                restoreCenterImage(type);
-
-                // 세션에 새롭게 생성된 이미지 큐를 넣어줍니다.
-                Session.set("images", ImageQueue.heap);
-                Tracker.flush();
-                Tracker.afterFlush(function () {
-                    setImagePosition();
-                })
-            } else {
-                //console.log("결과가 없습니다.");
+        if (data.i.length != 0) {
+            // sentence 쿼리 결과가 너무 늦은 경우
+            if (type == 2 /*sentence*/ && slider.$CurrentKeyword.indexOf(data.t[0].word) == -1) {
+                return;
             }
-        })
+
+            var Images = data.i;
+
+            // 이미지를 우선 순위 큐에 넣습니다.
+            pushImages(Images, 0, data.t, type);
+
+            // 중앙 이미지는 제자리로 다시 돌려줍니다.
+            restoreCenterImage(type);
+
+            // 세션에 새롭게 생성된 이미지 큐를 넣어줍니다.
+            Session.set("images", ImageQueue.heap);
+            Tracker.flush();
+            Tracker.afterFlush(function () {
+                setImagePosition();
+            })
+        } else {
+            //console.log("결과가 없습니다.");
+        }
+    })
 }
 
 // 이미지를 Neo4j database에서 받아옵니다.
@@ -177,37 +218,37 @@ getRandomImages = function(NumOfImages) {
     var startTime = start.getTime();
 
     Meteor.neo4j.call('getRandomImages', {
-            NumImages: NumOfImages
-        },
-        function (err, data) {
-            if (err) throw err;
+        NumImages: NumOfImages
+    },
+    function (err, data) {
+        if (err) throw err;
 
-            // 쿼리 수행 시간을 계산합니다. (종료시각)
-            var end = new Date();
-            var endTime = end.getTime();
-            var diffTime = new Date(endTime - startTime);
-            //console.log(diffTime.getSeconds() + '.' + diffTime.getMilliseconds() + ' seconds takes to get ' + slider.$MaximumImageNum + ' Images');
+        // 쿼리 수행 시간을 계산합니다. (종료시각)
+        var end = new Date();
+        var endTime = end.getTime();
+        var diffTime = new Date(endTime - startTime);
+        //console.log(diffTime.getSeconds() + '.' + diffTime.getMilliseconds() + ' seconds takes to get ' + slider.$MaximumImageNum + ' Images');
 
-            // 쿼리 수행 후 이미지 결과가 있으면
-            if (data.i.length != 0) {
-                var Images = data.i;
+        // 쿼리 수행 후 이미지 결과가 있으면
+        if (data.i.length != 0) {
+            var Images = data.i;
 
-                // 이미지를 우선 순위 큐에 넣습니다.
-                pushImages(Images, 0 /*priority*/, data.t, 0 /*type:random*/);
+            // 이미지를 우선 순위 큐에 넣습니다.
+            pushImages(Images, 0 /*priority*/, data.t, 0 /*type:random*/);
 
-                // 중앙 이미지는 제자리로 다시 돌려줍니다.
-                restoreCenterImage(0 /*type: random*/);
+            // 중앙 이미지는 제자리로 다시 돌려줍니다.
+            restoreCenterImage(0 /*type: random*/);
 
-                // 세션에 새롭게 생성된 이미지 큐를 넣어줍니다.
-                Session.set("images", ImageQueue.heap);
-                Tracker.flush();
-                Tracker.afterFlush(function () {
-                    setImagePosition();
-                })
-            } else {
-                //console.log("결과가 없습니다.");
-            }
-        });
+            // 세션에 새롭게 생성된 이미지 큐를 넣어줍니다.
+            Session.set("images", ImageQueue.heap);
+            Tracker.flush();
+            Tracker.afterFlush(function () {
+                setImagePosition();
+            })
+        } else {
+            //console.log("결과가 없습니다.");
+        }
+    });
 }
 
 
@@ -218,8 +259,8 @@ function changeMainImage(filename){
 }
 
 /*
- 설명: 이미지 슬라이더의 기본 위치와 크기를 설정하는 함수입니다.
- */
+   설명: 이미지 슬라이더의 기본 위치와 크기를 설정하는 함수입니다.
+   */
 function setJeegleSlider() {
     // 브라우져의 너비와 높이를 받아옵니다.
     var windowWidth = $(window).width();
