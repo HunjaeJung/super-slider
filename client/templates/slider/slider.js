@@ -1,3 +1,5 @@
+var imageServer = serverUrl + ":9090/";
+
 function Slider() {
     this.$DisplayPieces = 13;      // [홀수] 하나의 화면에 얼마나 보여줄지 결정하게 됩니다.
     this.$MaximumImageNum = 21;   // [홀수] 로드하는 최대 이미지 개수입니다.
@@ -103,7 +105,6 @@ Template.Slider.helpers({
     imageUploaded: function() {
         return {
             finished: function(index, fileInfo, context) {
-                console.dir(fileInfo);
                 changeMainImage(fileInfo.name);
             }
         }
@@ -211,8 +212,9 @@ getRandomImages = function(NumOfImages) {
 
 
 function changeMainImage(filename){
-    $('#main-image').attr('src','http://localhost:9090/'+filename);
-    //setImagePosition();
+    var imageSrc = imageServer + filename;
+    $('#main-image').attr('src',imageSrc);
+    refreshBackgroundImg(imageSrc);
 }
 
 /*
