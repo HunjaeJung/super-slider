@@ -133,12 +133,8 @@ Template.Slider.rendered = function () {
 
 Template.Slider.events({
     "click #processing-result": function(){
-        MaterializeModal.message({
-              title: 'Title',
-                message: 'some message'
-        });
-        $('#learn-result').toggle();
-        $('.rec-img-desc-wrapper').toggle();
+        //$('#learn-result').toggle();
+        //$('.rec-img-desc-wrapper').toggle();
     }
 });
 
@@ -147,9 +143,15 @@ Template.Slider.helpers({
     images: function () {
         var tempObject = Session.get("images");
         if (!!tempObject) {
+
             var clone = new Array();
             for ( var i = 0; i < slider.$MaximumImageNum; i++ ){
                 clone[i] = tempObject[i];
+
+                $('[data-num="'+i+'"]').tooltipster({
+                    content: $('<h2>'+i+'</h2>'),
+                    multiple: true
+                });
             }
 
             var cen = slider.$MainImageIndex;
