@@ -137,16 +137,17 @@ Template.Slider.helpers({
             for (var i = 0; i < tempObject.length; i++) {
                 tempObject[i].index = i;
             }
-        }
 
-        var tmp = tempObject[slider.$MainImageIndex];
-        tempObject[slider.$MainImageIndex] = tempObject[0];
-        for ( var i = 1; i < slider.$MaximumImageNum/2; i++){
-            tempObject[slider.$MainImageIndex-i] = tempObject[i*2-1];
-            tempObject[slider.$MainImageIndex+i] = tempObject[i*2];
+            var clone = new Array();
+            for ( var i = 0; i < slider.$MaximumImageNum; i++ ){
+                clone[i] = tempObject[i];
+            }
+            tempObject[slider.$MainImageIndex] = clone[0];
+            for ( var i = 1; i < slider.$MaximumImageNum/2; i++){
+                tempObject[slider.$MainImageIndex-i] = clone[i*2-1];
+                tempObject[slider.$MainImageIndex+i] = clone[i*2];
+            }
         }
-
-        console.dir(tempObject);
         return tempObject;
     },
     imageUploaded: function() {
