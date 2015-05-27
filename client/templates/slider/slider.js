@@ -131,6 +131,16 @@ Template.Slider.rendered = function () {
     }
 };
 
+Template.Slider.events({
+    "click #processing-result": function(){
+        MaterializeModal.message({
+              title: 'Title',
+                message: 'some message'
+        });
+        $('#learn-result').toggle();
+        $('.rec-img-desc-wrapper').toggle();
+    }
+});
 
 currentFilename = "";
 Template.Slider.helpers({
