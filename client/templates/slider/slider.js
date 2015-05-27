@@ -44,31 +44,40 @@ Template.Slider.created = function () {
         if(learnResult.length == 0) return;
 
         var content = learnResult[0].content;
+        var first = content.predict_style[0].name;
+        first += " ";
+        first += content.predict_obj[0].name;
+        $('#first-prize').html(first);
+        $('#medal-id').css('display','inline-block');
 
         var htmlList = [];
         var html = '<div class="predict-title">* the styles predicted</div>'
+        html += '<ul class="predict-ul">';
         htmlList.push(html);
         for(i=0;i<content.predict_obj.length;i++){
-            html = '<div id="predict-style-'+i+'" class="predict-style" data-style-id="'+i+'">';
-            html += (i+1) + ': '
+            html = '<li id="predict-style-'+i+'" class="predict-style" data-style-id="'+i+'">';
             html += content.predict_style[i].name
-            html += '('+content.predict_style[i].score+')'
-            html += '</div>';
+            html += '('+parseFloat(content.predict_style[i].score).toFixed(2)+')'
+            html += '</li>';
             htmlList.push(html);
         }
+        html = '</ul>';
+        htmlList.push(html);
         $('#predict-styles').html(htmlList.join(''));
 
         htmlList = [];
         html = '<div class="predict-title">* the objects predicted</div>'
+        html += '<ul class="predict-ul">';
         htmlList.push(html);
         for(i=0;i<content.predict_obj.length;i++){
-            html = '<div id="predict-obj-'+i+'" class="predict-obj" data-obj-id="'+i+'">';
-            html += (i+1) + ': '
+            html = '<li id="predict-obj-'+i+'" class="predict-obj" data-obj-id="'+i+'">';
             html += content.predict_obj[i].name
-            html += '('+content.predict_obj[i].score+')'
-            html += '</div>';
+            html += '('+parseFloat(content.predict_obj[i].score).toFixed(2)+')'
+            html += '</li>';
             htmlList.push(html);
         }
+        html = '</ul>';
+        htmlList.push(html);
         $('#predict-objs').html(htmlList.join(''));
 
         changeSubImages(content.recommended);
@@ -101,9 +110,6 @@ Template.Slider.rendered = function () {
             var centerNum = parseInt($('#main-image-li').attr('data-num'));
             var maxRange = parseInt(slider.$DisplayPieces/2);
 
-            console.log(clickedNum);
-            console.log(centerNum);
-            console.log(maxRange);
             // (slider.$MaximumImageNum-1) index 와 0 index 사이 처리
             if(centerNum < maxRange && clickedNum > (slider.$MaximumImageNum-maxRange-1)){
                 clickedNum = clickedNum - slider.$MaximumImageNum;
@@ -133,8 +139,7 @@ Template.Slider.rendered = function () {
 
 Template.Slider.events({
     "click #processing-result": function(){
-        //$('#learn-result').toggle();
-        //$('.rec-img-desc-wrapper').toggle();
+
     }
 });
 
@@ -147,11 +152,6 @@ Template.Slider.helpers({
             var clone = new Array();
             for ( var i = 0; i < slider.$MaximumImageNum; i++ ){
                 clone[i] = tempObject[i];
-
-                $('[data-num="'+i+'"]').tooltipster({
-                    content: $('<h2>'+i+'</h2>'),
-                    multiple: true
-                });
             }
 
             var cen = slider.$MainImageIndex;
@@ -166,8 +166,42 @@ Template.Slider.helpers({
                 tempObject[right] = clone[i*2];
             }
 
+            try{
+                $('[data-num]').tooltipster('destroy');
+                $('[data-num]').tooltipster('destroy');
+                $('[data-num]').tooltipster('destroy');
+            }
+            catch(err){
+            }
             for (var i = 0; i < tempObject.length; i++) {
                 tempObject[i].index = i;
+
+                var html = "";
+                html += '<h2>' + tempObject[i].data.style + '</h2>';
+                $('[data-num="'+i+'"]').tooltipster({
+                    content: $(html),
+                    multiple: true,
+                    theme: 'tooltipster-punk'
+                });
+
+                html = "";
+                html += '<h2>' + tempObject[i].data.object + '</h2>';
+                $('[data-num="'+i+'"]').tooltipster({
+                    content: $(html),
+                    multiple: true,
+                    theme: 'tooltipster-punk',
+                    position: 'bottom'
+                });
+
+
+                html = "";
+                html += '<h2> score: ' + parseFloat(tempObject[i].data.score).toFixed(4) + '</h2>';
+                $('[data-num="'+i+'"]').tooltipster({
+                    content: $(html),
+                    multiple: true,
+                    theme: 'tooltipster-punk',
+                    position: 'right'
+                });
             }
         }
         return tempObject;
@@ -194,6 +228,9 @@ function getDefaultImages() {
         //Images[i].score = i;
         Images[i].imageServer = "http://image.jeegle.io/";
         Images[i].recFlag = false;
+        Images[i].style = "default style";
+        Images[i].object = "default object";
+        Images[i].obj_score = 0;
     }
 
     // 이미지를 우선순위 큐에 넣습니다.

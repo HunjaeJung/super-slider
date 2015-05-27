@@ -1,10 +1,28 @@
 <template name="Slider">
     <!--Jeegle image slider start-->
+    <div id="medal-id" class="achievement">
+      <div class="medal-container">
+        <div class="medal">
+          <div class="ring">
+            <div class="inner">
+              <span class="text"><small>achievement</small></span>
+              <span class="stars">* * *</span>
+              <strong class="text">Top - 1</strong>
+            </div>
+          </div>
+        </div>
+        <div class="ribbon">
+          <div class="l"></div>
+          <div class="r"></div>
+        </div>
+      </div>
+      <h1 class="ribbon">
+        <strong id="first-prize" class="ribbon-content"></strong>
+      </h1>
+    </div>
+
     <div class="body-background"></div>
     <div class="body-background-wrapper"></div>
-    <div class="menu-btns">
-      <div id="processing-result" class="processing-result"></div>
-    </div>
     <div id="learn-result" class="learn-result">
       <div id="loading-spinner" class="loading-spinner"></div>
       <div id="predict-objs" class="predict-objs">
@@ -17,7 +35,7 @@
     </div>
 
     <div id="slider-box" class="slider-box hidden-xs">
-        {{> dropzone callbacks = imageUploaded }}
+        {{> dropzone callbacks = imageUploaded multiple = false}}
 
         <ul id="slider" class="slider">
             {{#each images}}
