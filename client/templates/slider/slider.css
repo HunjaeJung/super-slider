@@ -164,9 +164,16 @@ a.control-next:hover {
 }
 
 .rec-img-desc-wrapper{
+  visibility: hidden;
+  width :100%;
+  height: 100%;
   position: absolute;
   top: 0;
   color: #fff;
+}
+
+.rec-img-desc-wrapper:hover{
+  visibility: visible;
 }
 
 .rec-img-desc{

@@ -101,6 +101,9 @@ Template.Slider.rendered = function () {
             var centerNum = parseInt($('#main-image-li').attr('data-num'));
             var maxRange = parseInt(slider.$DisplayPieces/2);
 
+            console.log(clickedNum);
+            console.log(centerNum);
+            console.log(maxRange);
             // (slider.$MaximumImageNum-1) index 와 0 index 사이 처리
             if(centerNum < maxRange && clickedNum > (slider.$MaximumImageNum-maxRange-1)){
                 clickedNum = clickedNum - slider.$MaximumImageNum;
@@ -134,18 +137,25 @@ Template.Slider.helpers({
     images: function () {
         var tempObject = Session.get("images");
         if (!!tempObject) {
-            for (var i = 0; i < tempObject.length; i++) {
-                tempObject[i].index = i;
-            }
-
             var clone = new Array();
             for ( var i = 0; i < slider.$MaximumImageNum; i++ ){
                 clone[i] = tempObject[i];
             }
-            tempObject[slider.$MainImageIndex] = clone[0];
+
+            var cen = slider.$MainImageIndex;
+            tempObject[cen] = clone[0];
             for ( var i = 1; i < slider.$MaximumImageNum/2; i++){
-                tempObject[slider.$MainImageIndex-i] = clone[i*2-1];
-                tempObject[slider.$MainImageIndex+i] = clone[i*2];
+                var left = cen - i;
+                var right = cen + i;
+                if(left < 0) left = slider.$MaximumImageNum + left;
+                if(right >= slider.$MaximumImageNum) right = right - slider.$MaximumImageNum ;
+
+                tempObject[left] = clone[i*2-1];
+                tempObject[right] = clone[i*2];
+            }
+
+            for (var i = 0; i < tempObject.length; i++) {
+                tempObject[i].index = i;
             }
         }
         return tempObject;
@@ -169,7 +179,7 @@ function getDefaultImages() {
 
     // set image server
     for(i=0; i<Images.length; i++){
-        Images[i].score = i;
+        //Images[i].score = i;
         Images[i].imageServer = "http://image.jeegle.io/";
         Images[i].recFlag = false;
     }
@@ -178,7 +188,7 @@ function getDefaultImages() {
     pushImages(Images);
 
     // 나중에 이미지들이 바뀔때, 중앙 이미지는 바뀌면 안되므로, 중앙 이미지를 기억하고 있습니다.
-    slider.$MainImageNode = ImageQueue.heap[slider.$MainImageIndex];
+    slider.$MainImageNode = ImageQueue.heap[0];
 
     // 세션에 새롭게 생성된 slider.$MaximumImageNum 크기의 이미지 큐를 넣어줍니다.
     Session.set("images", ImageQueue.heap);
@@ -197,7 +207,7 @@ function changeMainImage(filename){
     refreshBackgroundImg(imageSrc);
 
     ImageQueue.heap[slider.$MainImageIndex].data._id = "";
-    ImageQueue.heap[slider.$MainImageIndex].data.imageServer = "";
+    ImageQueue.heap[slider.$MainImageIndex].data.imageServer = uploadedImageServer;
     ImageQueue.heap[slider.$MainImageIndex].data.originalImageUrl = "";
     ImageQueue.heap[slider.$MainImageIndex].data.thumbnailImageUrl = "";
     ImageQueue.heap[slider.$MainImageIndex].data.recFlag = false;
@@ -240,7 +250,7 @@ function changeSubImages(recommended){
 
     pushImages(Images);
 
-    restoreCenterImage(0);
+    restoreCenterImage();
 
     // 세션에 새롭게 생성된 slider.$MaximumImageNum 크기의 이미지 큐를 넣어줍니다.
     Session.set("images", ImageQueue.heap);
@@ -395,7 +405,7 @@ function setSuperSlider() {
 
         // 가운데 이미지 번호를 가지고 있습니다.
         slider.$MainImageIndex = parseInt(smallToBigLi.attr('data-num')); //this image number
-        slider.$MainImageNode = ImageQueue.heap[slider.$MainImageIndex];
+        slider.$MainImageNode = ImageQueue.heap[0];
 
         // 배경이미지 설정
         refreshBackgroundImg(smallToBigImg[0].src);
@@ -450,7 +460,7 @@ function setSuperSlider() {
         })
         // 가운데 이미지 번호를 가지고 있습니다.
         slider.$MainImageIndex = parseInt(smallToBigLi.attr('data-num')); //this image number
-        slider.$MainImageNode = ImageQueue.heap[slider.$MainImageIndex];
+        slider.$MainImageNode = ImageQueue.heap[0];
 
         var smallToBigImg = $('#slider').find('li:nth-child(' + (smallToBig) + ') img');
         smallToBigImg.attr('id', 'main-image');
@@ -571,7 +581,7 @@ function pushImages(Images){
 
 function restoreCenterImage() {
     if (slider.$MainImageNode != null) {
-        ImageQueue.heap[slider.$MainImageIndex] = slider.$MainImageNode;
+        ImageQueue.heap[0] = slider.$MainImageNode;
     }
 }
 
