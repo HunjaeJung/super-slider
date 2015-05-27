@@ -19,8 +19,14 @@
         <ul id="slider" class="slider">
             {{#each images}}
                 <li name="image-div" data-num="{{index}}" class="image-div">
-                    <img name="images_in_belt" class="images-in-belts" data-image-title="{{data.imagePath}}"
-                         src="http://image.jeegle.io/{{data.imagePath}}"/>
+                    <img name="images-in-belt" class="images-in-belts" data-image-title="{{data.imagePath}}" src="{{data.imageServer}}{{data.title}}"/>
+                    {{#if data.recFlag}}
+                    <div class="rec-img-desc-wrapper">
+                      <div class="rec-img-desc style">{{data.style}} - {{data.object}}</div>
+                      <div class="rec-img-desc score">({{data.score}})</div>
+                      <div class="rec-img-desc obj-score">{{data.obj_score}}</div>
+                    </div>
+                    {{/if}}
                 </li>
             {{/each}}
         </ul>
@@ -29,9 +35,6 @@
         <a href="#" id="slider-btn-right" class="slider-btn control-prev"></a>
     </div>
     <!--Jeegle image slider end-->
+
 </template>
 
-
-<template name="sample">
-    <div>hi</div>
-</template>
