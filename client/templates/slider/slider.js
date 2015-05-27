@@ -80,6 +80,16 @@ Template.Slider.created = function () {
         htmlList.push(html);
         $('#predict-objs').html(htmlList.join(''));
 
+        try{
+            $('#medal-id').tooltipster('destroy');
+        }
+        catch(err){
+
+        }
+        $('#medal-id').tooltipster({
+            content: $(htmlList.join('')),
+            theme: 'tooltipster-noir'
+        });
         changeSubImages(content.recommended);
     });
 
