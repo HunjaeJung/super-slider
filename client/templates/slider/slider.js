@@ -165,7 +165,7 @@ function getDefaultImages() {
     }
 
     // 이미지를 우선순위 큐에 넣습니다.
-    pushImages(Images, 0);
+    pushImages(Images);
 
     // 나중에 이미지들이 바뀔때, 중앙 이미지는 바뀌면 안되므로, 중앙 이미지를 기억하고 있습니다.
     slider.$MainImageNode = ImageQueue.heap[slider.$MainImageIndex];
@@ -228,7 +228,7 @@ function changeSubImages(recommended){
         Images.push(img);
     }
 
-    pushImages(Images, 0);
+    pushImages(Images);
 
     restoreCenterImage(0);
 
@@ -538,7 +538,7 @@ function setImagePosition() {
 }
 
 
-function pushImages(Images, priority) {
+function pushImages(Images){
     if (ImageQueue.isFull()) {
         ImageQueue.decAllPriority();
     }
@@ -552,8 +552,15 @@ function pushImages(Images, priority) {
         }
         if (duplicatedFlag) continue;
 
-        ImageQueue.push(Images[k], priority);
+        ImageQueue.push(Images[k], Images[k].score);
     }
+
+    var sortable = [];
+    ImageQueue.heap.forEach(function(image){
+        sortable.push([image, image.priority]);
+    });
+    sortable.sort(function(a,b) {return b[1]-a[1]});
+    ImageQueue = sortable;
 }
 
 
