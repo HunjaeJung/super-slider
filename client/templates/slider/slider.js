@@ -139,6 +139,13 @@ Template.Slider.helpers({
             }
         }
 
+        var tmp = tempObject[slider.$MainImageIndex];
+        tempObject[slider.$MainImageIndex] = tempObject[0];
+        for ( var i = 1; i < slider.$MaximumImageNum/2; i++){
+            tempObject[slider.$MainImageIndex-i] = tempObject[i*2-1];
+            tempObject[slider.$MainImageIndex+i] = tempObject[i*2];
+        }
+
         return tempObject;
     },
     imageUploaded: function() {
