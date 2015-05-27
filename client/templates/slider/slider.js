@@ -146,6 +146,7 @@ Template.Slider.helpers({
             tempObject[slider.$MainImageIndex+i] = tempObject[i*2];
         }
 
+        console.dir(tempObject);
         return tempObject;
     },
     imageUploaded: function() {
@@ -167,6 +168,7 @@ function getDefaultImages() {
 
     // set image server
     for(i=0; i<Images.length; i++){
+        Images[i].score = i;
         Images[i].imageServer = "http://image.jeegle.io/";
         Images[i].recFlag = false;
     }
@@ -562,12 +564,7 @@ function pushImages(Images){
         ImageQueue.push(Images[k], Images[k].score);
     }
 
-    var sortable = [];
-    ImageQueue.heap.forEach(function(image){
-        sortable.push([image, image.priority]);
-    });
-    sortable.sort(function(a,b) {return b[1]-a[1]});
-    ImageQueue = sortable;
+    ImageQueue.heap = ImageQueue.heap.sort(function(a,b) {return b-a});
 }
 
 
