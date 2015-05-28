@@ -158,9 +158,7 @@ a.control-next:hover {
 }
 
 .predict-ul{
-  list-style: none;
-  *list-style: decimal;
-  counter-reset: li;
+  list-style: decimal;
 }
 
 .predict-objs{
@@ -259,19 +257,18 @@ a.control-next:hover {
   .loading-spinner {
     display: none;
     position: absolute;
-    top: 50%;
-    right: 0;
-    bottom: 0;
     left: 50%;
-    margin: -15px 0 -15px;
+    top: 50%;
+    z-index: 3;
   }
 
   .achievement {
     display: none;
     font-family:Arial;
-    padding: 40px;
     z-index:1;
     position:absolute;
+    margin-top:30px;
+    margin-left:40px;
   }
   .achievement .medal-container {
     display:block;

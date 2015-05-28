@@ -8,7 +8,7 @@ function Slider() {
     this.$MainImageIndex = parseInt(this.$MaximumImageNum / 2); // 현재 중앙 이미지 번호입니다.
     this.$MainImageNode = null; // 중앙 이미지 노드입니다.
     this.$MainImageHeight = 0;        // 가운데 올 가장 큰 이미지의 한변의 길이입니다.
-    this.$MainImageMaxHeight = 640;
+    this.$MainImageMaxHeight = 440;
     this.$SubImagesHeight = 0;   // 이미지 하나당 너비입니다.
     this.$HeaderHeight = 0;
     this.$FooterHeight = 0;
@@ -42,6 +42,7 @@ Template.Slider.created = function () {
         learnResult = UploadedImage.find({"fileName": currentFilename}).fetch();
 
         if(learnResult.length == 0) return;
+        $('#medal-id').show();
 
         var content = learnResult[0].content;
         var first = content.predict_style[0].name;
@@ -51,7 +52,7 @@ Template.Slider.created = function () {
         $('#medal-id').css('display','inline-block');
 
         var htmlList = [];
-        var html = '<div class="predict-title">* the styles predicted</div>'
+        var html = '<div class="predict-title">STYLES</div>'
         html += '<ul class="predict-ul">';
         htmlList.push(html);
         for(i=0;i<content.predict_obj.length;i++){
@@ -63,10 +64,8 @@ Template.Slider.created = function () {
         }
         html = '</ul>';
         htmlList.push(html);
-        $('#predict-styles').html(htmlList.join(''));
 
-        htmlList = [];
-        html = '<div class="predict-title">* the objects predicted</div>'
+        html = '<div class="predict-title">OBJECTS</div>'
         html += '<ul class="predict-ul">';
         htmlList.push(html);
         for(i=0;i<content.predict_obj.length;i++){
@@ -78,7 +77,6 @@ Template.Slider.created = function () {
         }
         html = '</ul>';
         htmlList.push(html);
-        $('#predict-objs').html(htmlList.join(''));
 
         try{
             $('#medal-id').tooltipster('destroy');
@@ -88,7 +86,8 @@ Template.Slider.created = function () {
         }
         $('#medal-id').tooltipster({
             content: $(htmlList.join('')),
-            theme: 'tooltipster-noir'
+            theme: 'tooltipster-punk-2',
+            position: 'bottom'
         });
         changeSubImages(content.recommended);
     });
@@ -148,9 +147,6 @@ Template.Slider.rendered = function () {
 };
 
 Template.Slider.events({
-    "click #processing-result": function(){
-
-    }
 });
 
 currentFilename = "";
@@ -158,7 +154,6 @@ Template.Slider.helpers({
     images: function () {
         var tempObject = Session.get("images");
         if (!!tempObject) {
-
             var clone = new Array();
             for ( var i = 0; i < slider.$MaximumImageNum; i++ ){
                 clone[i] = tempObject[i];
@@ -224,6 +219,7 @@ Template.Slider.helpers({
                 $('#predict-objs').html('');
                 $('#predict-styles').html('');
                 $('#loading-spinner').show();
+                $('#medal-id').hide();
             }
         }
     }
