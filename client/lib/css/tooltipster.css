@@ -43,6 +43,7 @@
 	left: 0;
 	top: 0;
 	z-index: 9999999;
+  display: block !important
 	pointer-events: none;
 	width: auto;
 	overflow: visible;

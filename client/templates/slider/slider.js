@@ -87,7 +87,8 @@ Template.Slider.created = function () {
         $('#medal-id').tooltipster({
             content: $(htmlList.join('')),
             theme: 'tooltipster-punk-2',
-            position: 'bottom'
+            position: 'bottom',
+            trigger: 'click'
         });
         changeSubImages(content.recommended);
     });
@@ -345,6 +346,10 @@ function setSuperSlider() {
     }else{
         $('#container-wrapper').css('visibility', '');
     }
+
+    $('#drag-info').css('width', mainImageHeight);
+    $('#drag-info').css('left', subImagesHeight * parseInt(slider.$DisplayPieces / 2));
+    $('#drag-info').css('top', (windowHeight-(mainImageHeight+slider.$HeaderHeight+slider.$FooterHeight))/2-50);
 
     // dropzone 반응형
     $('.jqDropZone').css('width', mainImageHeight);
